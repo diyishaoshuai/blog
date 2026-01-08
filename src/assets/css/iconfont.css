@@ -1,0 +1,26 @@
+/* 阿里巴巴图标库 - iconfont */
+@font-face {
+  font-family: 'iconfont';
+  src: url('//at.alicdn.com/t/c/font_5106267_idy8dfyhx1q.woff2?t=1767865550356') format('woff2'),
+       url('//at.alicdn.com/t/c/font_5106267_idy8dfyhx1q.woff?t=1767865550356') format('woff'),
+       url('//at.alicdn.com/t/c/font_5106267_idy8dfyhx1q.ttf?t=1767865550356') format('truetype');
+}
+
+.iconfont {
+  font-family: 'iconfont' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* GitHub 图标 */
+.icon-github::before {
+  content: '\e885';
+}
+
+/* B站 图标 */
+.icon-bilibili::before {
+  content: '\ea96';
+}
+
