@@ -11,36 +11,32 @@
 - **Pinia** - Vue 官方推荐的状态管理库（替代 Vuex）
 - **Vue Router** - 官方路由管理器
 - **Tailwind CSS** - 实用优先的 CSS 框架，快速构建炫酷 UI
-- **shadcn-vue** / **Naive UI** - 现代化 UI 组件库
 - **VueUse** - Vue Composition API 工具集合
-- **Marked** / **Markdown-it** - Markdown 解析器
-- **Prism.js** / **Shiki** - 代码高亮
-- **Framer Motion** (Vue版本) / **@vueuse/motion** - 流畅动画效果
+- **Marked** - Markdown 解析器
+- **Shiki** - 代码高亮
+- **Axios** - HTTP 客户端
+- **Day.js** - 日期处理库
+- **阿里巴巴图标库** - 图标字体
 
 ### 后端 (Backend)
 - **Node.js** - JavaScript 运行时
-- **Express** / **Fastify** - Web 框架（Fastify 性能更优）
+- **Express** - Web 框架
 - **TypeScript** - 类型安全
 - **MongoDB** - NoSQL 文档数据库
 - **Mongoose** - MongoDB 对象建模工具
 - **JWT** - 身份认证
-- **bcrypt** - 密码加密
+- **bcryptjs** - 密码加密
 - **Express Validator** - 数据验证
 - **Multer** - 文件上传处理
 - **Helmet** - 安全中间件
 - **CORS** - 跨域资源共享
+- **Compression** - 响应压缩
 
 ### 开发工具
 - **ESLint** - 代码检查
 - **Prettier** - 代码格式化
-- **Husky** - Git hooks
-- **Commitlint** - 提交信息规范
 - **pnpm** - 高效的包管理器
-
-### 部署
-- **Nginx** - 反向代理和静态资源服务
-- **PM2** - Node.js 进程管理器
-- **Docker** (可选) - 容器化部署
+- **tsx** - TypeScript 执行工具
 
 ## 📁 项目结构
 
@@ -48,9 +44,22 @@
 blog/
 ├── frontend/              # 前端项目
 │   ├── src/
-│   │   ├── assets/        # 静态资源
+│   │   ├── assets/        # 静态资源（CSS、图标等）
 │   │   ├── components/    # 组件
+│   │   │   ├── ArticleCard.vue      # 文章卡片
+│   │   │   ├── Carousel.vue         # 轮播图
+│   │   │   ├── Footer.vue            # 页脚
+│   │   │   ├── Navbar.vue           # 导航栏
+│   │   │   ├── PopularArticles.vue  # 热门文章
+│   │   │   ├── ProfileCard.vue     # 个人介绍卡片
+│   │   │   ├── Sidebar.vue          # 侧边栏
+│   │   │   ├── TagCloudCard.vue    # 标签云卡片
+│   │   │   └── TagsSection.vue     # 标签区域
 │   │   ├── views/         # 页面视图
+│   │   │   ├── Home.vue            # 首页
+│   │   │   ├── Articles.vue        # 文章列表
+│   │   │   ├── ArticleDetail.vue  # 文章详情
+│   │   │   └── About.vue          # 关于页面
 │   │   ├── router/        # 路由配置
 │   │   ├── stores/        # Pinia 状态管理
 │   │   ├── composables/   # 组合式函数
@@ -66,14 +75,23 @@ blog/
 │   ├── src/
 │   │   ├── controllers/   # 控制器
 │   │   ├── models/        # 数据模型
+│   │   │   ├── User.ts       # 用户模型
+│   │   │   ├── Article.ts    # 文章模型
+│   │   │   └── Comment.ts    # 评论模型
 │   │   ├── routes/        # 路由
-│   │   ├── middleware/    # 中间件
+│   │   │   ├── auth.ts       # 认证路由
+│   │   │   ├── article.ts    # 文章路由
+│   │   │   └── user.ts       # 用户路由
+│   │   ├── middleware/   # 中间件
+│   │   │   └── auth.ts       # 认证中间件
 │   │   ├── utils/         # 工具函数
 │   │   ├── types/         # TypeScript 类型定义
 │   │   ├── config/        # 配置文件
+│   │   │   └── database.ts  # 数据库配置
 │   │   └── app.ts         # 应用入口
 │   ├── package.json
-│   └── tsconfig.json
+│   ├── tsconfig.json
+│   └── env.example        # 环境变量示例
 │
 └── README.md
 ```
@@ -83,21 +101,20 @@ blog/
 ### 核心功能
 - ✅ 文章发布与管理（Markdown 支持）
 - ✅ 文章分类与标签
-- ✅ 评论系统
-- ✅ 用户认证与授权
+- ✅ 用户认证与授权（JWT）
 - ✅ 响应式设计（移动端适配）
-- ✅ 代码高亮
 - ✅ 文章搜索
 - ✅ 文章归档
 
 ### 炫酷特性
 - ✨ 流畅的页面过渡动画
-- ✨ 暗黑模式支持
-- ✨ 粒子背景效果
-- ✨ 3D 卡片效果
-- ✨ 滚动动画
-- ✨ 打字机效果
-- ✨ 图片懒加载与优化
+- ✨ 暗黑模式支持（带扩散动画效果）
+- ✨ 轮播图展示推荐内容
+- ✨ 卡片式标签云
+- ✨ 文章封面图悬停放大效果
+- ✨ 按钮交互动画
+- ✨ 个人介绍卡片（头像悬停显示关于信息）
+- ✨ 统计信息展示
 
 ## 🛠️ 开发指南
 
@@ -114,6 +131,15 @@ blog/
 cd backend
 copy env.example .env
 # 然后编辑 .env 文件，配置 MongoDB 连接和 JWT 密钥
+```
+
+环境变量配置示例：
+```env
+PORT=3000
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/blog
+JWT_SECRET=your-super-secret-jwt-key
+CORS_ORIGIN=http://localhost:5173
 ```
 
 ### 安装依赖
@@ -150,22 +176,56 @@ pnpm build
 # 构建后端
 cd backend
 pnpm build
+pnpm start
 ```
 
-## 📝 待办事项
+## 📝 项目进度
 
+### 已完成 ✅
 - [x] 初始化前端项目（Vue 3 + Vite + TypeScript）
 - [x] 初始化后端项目（Node.js + Express + TypeScript）
 - [x] 配置 MongoDB 连接
 - [x] 实现用户认证系统（基础框架）
 - [x] 实现文章 CRUD 功能（基础框架）
-- [ ] 完善前端 UI 界面
+- [x] 实现前端 UI 界面
+- [x] 实现首页布局（轮播图、文章列表、侧边栏）
+- [x] 实现个人介绍卡片
+- [x] 实现标签云展示
+- [x] 实现暗黑模式切换（带动画效果）
+- [x] 实现响应式设计
+
+### 待完成 📋
 - [ ] 添加 Markdown 编辑器
 - [ ] 实现评论系统
+- [ ] 实现文章搜索功能
 - [ ] 优化 SEO
 - [ ] 部署到云服务器
+
+## 🎯 主要特性说明
+
+### 主题切换动画
+- 使用圆形扩散动画实现主题切换
+- 从按钮位置开始扩散，覆盖整个页面
+- 动画时长 0.5 秒，使用流畅的缓动函数
+
+### 响应式设计
+- 移动端适配
+- 侧边栏在移动端自动隐藏
+- 文章列表支持网格和列表两种视图
+
+### 性能优化
+- 使用 Vite 进行快速构建
+- 代码分割和懒加载
+- 图片优化和懒加载
 
 ## 📄 许可证
 
 MIT License
 
+## 👤 作者
+
+第一少帅 (First General)
+
+## 🔗 相关链接
+
+- GitHub: [diyishaoshuai/blog](https://github.com/diyishaoshuai/blog)
