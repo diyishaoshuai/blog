@@ -1,6 +1,9 @@
 <template>
   <article
-    class="group bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300 overflow-hidden"
+    class="article-card group"
+    @mousemove="handleMouseMove"
+    @mouseleave="handleMouseLeave"
+    :style="cardStyle"
   >
     <router-link :to="`/article/${article._id}`" class="block">
       <!-- 文章封面图 -->
@@ -72,15 +75,81 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
 import type { Article } from '@/types'
 import { formatDate } from '@/utils'
 
 defineProps<{
   article: Article
 }>()
+
+const rotateX = ref(0)
+const rotateY = ref(0)
+const glareX = ref(50)
+const glareY = ref(50)
+
+const handleMouseMove = (e: MouseEvent) => {
+  const card = e.currentTarget as HTMLElement
+  const rect = card.getBoundingClientRect()
+  const x = e.clientX - rect.left
+  const y = e.clientY - rect.top
+
+  const centerX = rect.width / 2
+  const centerY = rect.height / 2
+
+  rotateY.value = ((x - centerX) / centerX) * 10
+  rotateX.value = ((centerY - y) / centerY) * 10
+
+  glareX.value = (x / rect.width) * 100
+  glareY.value = (y / rect.height) * 100
+}
+
+const handleMouseLeave = () => {
+  rotateX.value = 0
+  rotateY.value = 0
+  glareX.value = 50
+  glareY.value = 50
+}
+
+const cardStyle = computed(() => ({
+  transform: `perspective(1000px) rotateX(${rotateX.value}deg) rotateY(${rotateY.value}deg)`,
+  '--glare-x': `${glareX.value}%`,
+  '--glare-y': `${glareY.value}%`
+}))
 </script>
 
 <style scoped>
+.article-card {
+  @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden relative;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+}
+
+.article-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at var(--glare-x) var(--glare-y),
+    rgba(255, 255, 255, 0.3),
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.article-card:hover::before {
+  opacity: 1;
+}
+
+.article-card:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

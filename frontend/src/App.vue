@@ -1,5 +1,8 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <!-- 粒子背景 -->
+    <ParticleBackground />
+
     <Navbar ref="navbarRef" />
     <main class="container-custom py-8 pt-24 relative z-10">
       <RouterView />
@@ -26,6 +29,7 @@ import { ref } from 'vue'
 import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+import ParticleBackground from './components/ParticleBackground.vue'
 
 const navbarRef = ref<InstanceType<typeof Navbar> | null>(null)
 </script>

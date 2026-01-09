@@ -1,5 +1,5 @@
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-[100] w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm">
+  <nav class="navbar-glass">
     <div class="container-custom">
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
@@ -161,7 +161,6 @@ const toggleMobileMenu = () => {
 
 const toggleSearch = () => {
   // 搜索功能待实现
-  console.log('打开搜索')
 }
 
 // 初始化主题
@@ -193,12 +192,79 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* 玻璃态导航栏 */
+.navbar-glass {
+  @apply fixed top-0 left-0 right-0 z-[100] w-full;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .navbar-glass {
+  background: rgba(17, 24, 39, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
 .nav-link {
-  @apply text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors font-medium;
+  @apply text-gray-700 dark:text-gray-300 font-medium relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0ea5e9, #3b82f6);
+  transform: translateX(-50%);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link:hover {
+  @apply text-primary-600 dark:text-primary-400;
+  transform: translateY(-2px);
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 .btn-icon {
-  @apply p-2 rounded-xl border-2 border-transparent hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all duration-300 hover:scale-110 active:scale-95;
+  @apply p-2 rounded-xl relative overflow-hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(59, 130, 246, 0.1));
+}
+
+.btn-icon::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.3), transparent);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-icon:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+.btn-icon:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(14, 165, 233, 0.2);
+}
+
+.btn-icon:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .scale-enter-active,

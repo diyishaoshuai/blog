@@ -258,6 +258,36 @@ const articles = ref<Article[]>([
 }
 
 .btn-primary {
-  @apply px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-all duration-300 hover:scale-105 active:scale-95 hover:shadow-lg;
+  @apply px-6 py-3 bg-primary-600 text-white rounded-xl font-medium relative overflow-hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.6);
+  background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
 }
 </style>
