@@ -16,9 +16,10 @@
       <span
         v-for="tag in topTags"
         :key="tag.name"
-        class="px-3 py-1.5 text-sm rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-600 dark:hover:text-primary-400 cursor-pointer transition-all duration-300 hover:scale-105"
+        class="tag-item px-3 py-1.5 text-sm rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary-100 dark:hover:bg-primary-900/30 hover:text-primary-600 dark:hover:text-primary-400 cursor-pointer transition-all duration-300 hover:scale-105"
       >
-        {{ tag.name }} <span class="text-xs opacity-70">{{ tag.count }}</span>
+        <span class="text-with-underline">{{ tag.name }}</span>
+        <span class="text-xs ml-1">{{ tag.count }}</span>
       </span>
     </div>
 
@@ -55,3 +56,21 @@ const topTags = computed(() => {
     .slice(0, 10)
 })
 </script>
+
+<style scoped>
+/* 文字下划线从左到右动画 */
+.text-with-underline {
+  position: relative;
+  display: inline;
+  background-image: linear-gradient(90deg, #0ea5e9, #3b82f6);
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  transition: background-size 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-bottom: 2px;
+}
+
+.tag-item:hover .text-with-underline {
+  background-size: 100% 2px;
+}
+</style>

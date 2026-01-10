@@ -29,8 +29,10 @@
         >
           <div class="item-number">{{ String(index + 1).padStart(2, '0') }}</div>
           <div class="item-content">
-            <h3 class="item-title">{{ item.title }}</h3>
-            <p class="item-description">{{ item.description }}</p>
+            <div class="text-block">
+              <h3 class="item-title">{{ item.title }}</h3>
+              <p class="item-description">{{ item.description }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -171,7 +173,10 @@ onUnmounted(() => {
 }
 
 .list-item {
-  @apply flex gap-4 p-4 cursor-pointer transition-all duration-300 flex-1;
+  @apply flex gap-4 cursor-pointer transition-all duration-300;
+  padding: 12px 16px;
+  height: 75px;
+  box-sizing: border-box;
 }
 
 .list-item:hover {
@@ -191,12 +196,54 @@ onUnmounted(() => {
   @apply flex-1 min-w-0;
 }
 
+.text-block {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
 .item-title {
-  @apply text-white font-bold text-sm mb-1 line-clamp-2;
+  @apply text-white font-bold text-sm mb-1;
+  display: inline-block;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.item-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 1));
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .item-description {
-  @apply text-white/80 text-xs line-clamp-1;
+  @apply text-white/80 text-xs;
+  display: inline-block;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.item-description::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8));
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.15s;
+}
+
+.list-item:hover .item-title::after {
+  width: 100%;
+}
+
+.list-item:hover .item-description::after {
+  width: 100%;
 }
 </style>
 

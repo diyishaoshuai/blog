@@ -41,8 +41,8 @@
         </div>
 
         <!-- 标题 -->
-        <h2 class="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
-          {{ article.title }}
+        <h2 class="article-title text-xl font-bold mb-2 line-clamp-2">
+          <span class="title-text">{{ article.title }}</span>
         </h2>
 
         <!-- 摘要 -->
@@ -150,6 +150,41 @@ const cardStyle = computed(() => ({
 .article-card:hover {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
+
+/* 标题下划线从左到右动画 */
+.article-title {
+  position: relative;
+  color: #111827;
+  transition: color 0.3s ease;
+}
+
+.dark .article-title {
+  color: #f3f4f6;
+}
+
+.article-title .title-text {
+  position: relative;
+  display: inline;
+  background-image: linear-gradient(90deg, #0ea5e9, #3b82f6);
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  transition: background-size 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-bottom: 2px;
+}
+
+.group:hover .article-title .title-text {
+  background-size: 100% 2px;
+}
+
+.group:hover .article-title {
+  color: #0ea5e9;
+}
+
+.dark .group:hover .article-title {
+  color: #60a5fa;
+}
+
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;

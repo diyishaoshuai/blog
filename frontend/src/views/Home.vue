@@ -59,10 +59,11 @@
 
             <!-- 列表布局 -->
             <div v-else class="space-y-4">
-              <div
+              <router-link
                 v-for="article in articles"
                 :key="article._id"
-                class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-all animate-slide-up"
+                :to="`/article/${article._id}`"
+                class="group block bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700 hover:shadow-md transition-all animate-slide-up"
               >
                 <div class="flex gap-4">
                   <div class="flex-1">
@@ -74,11 +75,11 @@
                         {{ formatDate(article.createdAt, 'YYYY-MM-DD') }}
                       </span>
                     </div>
-                    <router-link :to="`/article/${article._id}`">
-                      <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                    <h3 class="text-xl font-bold mb-2">
+                      <span class="list-title-text text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                         {{ article.title }}
-                      </h3>
-                    </router-link>
+                      </span>
+                    </h3>
                     <p class="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
                       {{ article.summary || article.content.substring(0, 150) + '...' }}
                     </p>
@@ -99,16 +100,16 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
 
-          <!-- 加载更多 -->
-          <div class="text-center">
-            <button class="btn-primary">
-              加载更多
-            </button>
-          </div>
+          <!-- 翻页组件 -->
+          <Pagination
+            :current-page="currentPage"
+            :total-pages="totalPages"
+            @update:current-page="handlePageChange"
+          />
         </div>
 
         <!-- 侧边栏 -->
@@ -119,14 +120,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import ArticleCard from '@/components/ArticleCard.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Carousel from '@/components/Carousel.vue'
+import Pagination from '@/components/Pagination.vue'
 import type { Article } from '@/types'
 import { formatDate } from '@/utils'
 
 const viewMode = ref<'grid' | 'list'>('grid')
+const currentPage = ref(1)
+const pageSize = 10
+const totalPages = ref(2)
 
 // 模拟文章数据
 const articles = ref<Article[]>([
@@ -239,6 +244,13 @@ const articles = ref<Article[]>([
     updatedAt: '2025-09-15T00:00:00Z'
   }
 ])
+
+// 翻页处理函数
+const handlePageChange = (page: number) => {
+  currentPage.value = page
+  // 这里可以添加加载新数据的逻辑
+  console.log('切换到第', page, '页')
+}
 </script>
 
 <style scoped>
@@ -289,5 +301,21 @@ const articles = ref<Article[]>([
 
 .btn-primary:active {
   transform: translateY(0) scale(0.98);
+}
+
+/* 列表标题下划线效果 */
+.list-title-text {
+  position: relative;
+  display: inline;
+  background-image: linear-gradient(90deg, #0ea5e9, #3b82f6);
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  transition: background-size 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-bottom: 2px;
+}
+
+.group:hover .list-title-text {
+  background-size: 100% 2px;
 }
 </style>

@@ -3,7 +3,24 @@
     "allow": [
       "Bash(dir:*)",
       "Bash(rm:*)",
-      "Bash(pnpm run dev:*)"
+      "Bash(pnpm run dev:*)",
+      "WebFetch(domain:blog.csdn.net)",
+      "Bash(claude mcp add:*)",
+      "Bash(start chrome:*)",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "Bash(npx skills-installer:*)",
+      "Bash(setx:*)",
+      "Bash(claude skills list:*)",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__list_console_messages",
+      "mcp__chrome-devtools__list_network_requests",
+      "mcp__chrome-devtools__hover",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__new_page",
+      "Skill(frontend-design)",
+      "mcp__chrome-devtools__select_page"
     ]
   }
 }

@@ -36,8 +36,10 @@
 
               <!-- 文章信息 -->
               <div class="flex-1 min-w-0">
-                <h4 class="text-sm font-medium text-gray-900 dark:text-gray-100 line-clamp-2 mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                  {{ article.title }}
+                <h4 class="text-sm font-medium line-clamp-2 mb-1">
+                  <span class="text-with-underline text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                    {{ article.title }}
+                  </span>
                 </h4>
                 <div class="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
                   <span class="flex items-center gap-1">
@@ -138,5 +140,21 @@ const getIndexClass = (index: number) => {
 
 .list-move {
   transition: transform 0.3s ease;
+}
+
+/* 文字下划线从左到右动画 */
+.text-with-underline {
+  position: relative;
+  display: inline;
+  background-image: linear-gradient(90deg, #0ea5e9, #3b82f6);
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0% 100%;
+  transition: background-size 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-bottom: 2px;
+}
+
+.group:hover .text-with-underline {
+  background-size: 100% 2px;
 }
 </style>
