@@ -1,13 +1,13 @@
 <template>
   <aside class="hidden lg:block w-80 flex-shrink-0">
-    <div class="sticky top-20 space-y-6">
+    <div class="sticky top-20 space-y-3">
       <!-- 个人介绍 -->
       <ProfileCard />
 
       <!-- 统计信息 -->
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">统计</h3>
-        <div class="grid grid-cols-2 gap-4">
+      <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-gray-100">统计</h3>
+        <div class="grid grid-cols-2 gap-3">
           <div class="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
             <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-1">
               {{ stats.articles }}
@@ -42,8 +42,8 @@
       <TagsSection :tags="allTags" />
 
       <!-- 友链 -->
-      <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-        <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">友情链接</h3>
+      <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg font-semibold mb-3 text-gray-900 dark:text-gray-100">友情链接</h3>
         <div class="space-y-2 text-sm">
           <a
             v-for="link in friendLinks"

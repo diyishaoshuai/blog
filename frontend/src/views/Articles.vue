@@ -6,17 +6,27 @@
 
         <!-- 筛选和排序 -->
         <div class="flex flex-wrap gap-4 mb-8">
-          <select class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-            <option>全部分类</option>
-            <option>软件推荐</option>
-            <option>经验分享</option>
-            <option>教程</option>
-          </select>
-          <select class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-            <option>最新发布</option>
-            <option>最多浏览</option>
-            <option>最多点赞</option>
-          </select>
+          <CustomSelect
+            v-model="selectedCategory"
+            :options="categoryOptions"
+          >
+            <template #icon>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+              </svg>
+            </template>
+          </CustomSelect>
+
+          <CustomSelect
+            v-model="selectedSort"
+            :options="sortOptions"
+          >
+            <template #icon>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+              </svg>
+            </template>
+          </CustomSelect>
         </div>
 
         <!-- 文章网格 -->
@@ -51,7 +61,27 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import ArticleCard from '@/components/ArticleCard.vue'
+import CustomSelect from '@/components/CustomSelect.vue'
 import type { Article } from '@/types'
+
+// 筛选和排序状态
+const selectedCategory = ref('all')
+const selectedSort = ref('latest')
+
+// 分类选项
+const categoryOptions = [
+  { label: '全部分类', value: 'all' },
+  { label: '软件推荐', value: 'software' },
+  { label: '经验分享', value: 'experience' },
+  { label: '教程', value: 'tutorial' }
+]
+
+// 排序选项
+const sortOptions = [
+  { label: '最新发布', value: 'latest' },
+  { label: '最多浏览', value: 'views' },
+  { label: '最多点赞', value: 'likes' }
+]
 
 // 模拟文章数据
 const articles = ref<Article[]>([

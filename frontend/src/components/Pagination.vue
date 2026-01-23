@@ -197,9 +197,22 @@ const jumpToPage = () => {
   }
 }
 
-// 监听当前页变化，滚动到顶部
+// 监听当前页变化，滚动到最新文章位置
 watch(() => props.currentPage, () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+  // 等待 DOM 更新后再滚动
+  setTimeout(() => {
+    const articlesSection = document.querySelector('h2')
+    if (articlesSection) {
+      const offset = 100 // 距离顶部的偏移量
+      const elementPosition = articlesSection.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }
+  }, 100)
 })
 </script>
 

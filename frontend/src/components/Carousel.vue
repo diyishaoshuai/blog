@@ -207,6 +207,7 @@ onUnmounted(() => {
   display: inline-block;
   position: relative;
   padding-bottom: 4px;
+  width: 100%;
 }
 
 .item-title::after {
@@ -225,6 +226,7 @@ onUnmounted(() => {
   display: inline-block;
   position: relative;
   padding-bottom: 4px;
+  width: 100%;
 }
 
 .item-description::after {

@@ -1,5 +1,8 @@
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <!-- 滚动进度条 -->
+    <ScrollProgress />
+
     <!-- 粒子背景 -->
     <ParticleBackground />
 
@@ -30,6 +33,7 @@ import { RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
 import ParticleBackground from './components/ParticleBackground.vue'
+import ScrollProgress from './components/ScrollProgress.vue'
 
 const navbarRef = ref<InstanceType<typeof Navbar> | null>(null)
 </script>

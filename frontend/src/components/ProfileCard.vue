@@ -33,7 +33,7 @@
     </div>
 
     <!-- 底部信息（固定在底部） -->
-    <div class="info-section absolute bottom-0 left-0 w-full px-6 pb-6">
+    <div class="info-section absolute bottom-0 left-0 w-full px-4 pb-4">
       <div class="name-section">
         <h3 class="name">第一少帅</h3>
         <p class="name-en">First General</p>

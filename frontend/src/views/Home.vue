@@ -1,18 +1,18 @@
 <template>
   <div class="relative">
     <!-- 主要内容区域 -->
-    <div class="max-w-7xl mx-auto">
+    <div class="mx-auto" style="max-width: 1408px;">
       <!-- 轮播图 - 全宽 -->
-      <div class="mb-8">
+      <div class="mb-3">
         <Carousel />
       </div>
 
-      <div class="flex gap-8 justify-center">
+      <div class="flex gap-3">
         <!-- 文章列表区域 -->
-        <div class="flex-1 max-w-4xl">
+        <div class="flex-1">
           <!-- 文章列表 -->
-          <div class="mb-8">
-            <div class="flex items-center justify-between mb-6">
+          <div class="mb-3">
+            <div class="flex items-center justify-between mb-3">
               <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">最新文章</h2>
               <div class="flex items-center gap-2">
                 <button
@@ -47,7 +47,7 @@
             <!-- 网格布局 - 2列 -->
             <div
               v-if="viewMode === 'grid'"
-              class="grid grid-cols-1 md:grid-cols-2 gap-6"
+              class="grid grid-cols-1 md:grid-cols-2 gap-3"
             >
               <ArticleCard
                 v-for="article in articles"
@@ -58,7 +58,7 @@
             </div>
 
             <!-- 列表布局 -->
-            <div v-else class="space-y-4">
+            <div v-else class="space-y-3">
               <router-link
                 v-for="article in articles"
                 :key="article._id"
@@ -131,10 +131,10 @@ import { formatDate } from '@/utils'
 const viewMode = ref<'grid' | 'list'>('grid')
 const currentPage = ref(1)
 const pageSize = 10
-const totalPages = ref(2)
+const totalPages = ref(100)
 
-// 模拟文章数据
-const articles = ref<Article[]>([
+// 基础文章模板
+const articleTemplates = [
   {
     _id: '1',
     title: '我在2026年推荐的Mac软件',
@@ -243,12 +243,37 @@ const articles = ref<Article[]>([
     createdAt: '2025-09-15T00:00:00Z',
     updatedAt: '2025-09-15T00:00:00Z'
   }
-])
+]
+
+// 生成假数据函数
+const generateArticles = () => {
+  const result: Article[] = []
+  const categories = ['软件推荐', '经验分享', '教程', '开发技术', '设计分享']
+  const tags = ['软件', 'Mac', 'Chrome', 'AI', 'Vue', 'TypeScript', '教程', '开发']
+
+  for (let i = 0; i < pageSize; i++) {
+    const template = articleTemplates[i % articleTemplates.length]
+    const articleNum = (currentPage.value - 1) * pageSize + i + 1
+
+    result.push({
+      ...template,
+      _id: String(articleNum),
+      title: `${template.title} - 第${articleNum}篇`,
+      views: Math.floor(Math.random() * 5000) + 1000,
+      likes: Math.floor(Math.random() * 200) + 50,
+      category: categories[Math.floor(Math.random() * categories.length)]
+    })
+  }
+
+  return result
+}
+
+// 当前页的文章数据
+const articles = computed(() => generateArticles())
 
 // 翻页处理函数
 const handlePageChange = (page: number) => {
   currentPage.value = page
-  // 这里可以添加加载新数据的逻辑
   console.log('切换到第', page, '页')
 }
 </script>

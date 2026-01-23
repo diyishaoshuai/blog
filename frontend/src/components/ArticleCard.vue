@@ -25,9 +25,9 @@
       </div>
 
       <!-- 文章内容 -->
-      <div class="p-6">
+      <div class="p-4">
         <!-- 分类和标签 -->
-        <div class="flex items-center gap-2 mb-3">
+        <div class="flex items-center gap-2 mb-2">
           <span class="px-2 py-1 text-xs rounded bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300">
             {{ article.category }}
           </span>
@@ -46,7 +46,7 @@
         </h2>
 
         <!-- 摘要 -->
-        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+        <p class="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
           {{ article.summary || article.content.substring(0, 100) + '...' }}
         </p>
 

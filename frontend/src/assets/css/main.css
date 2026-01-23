@@ -15,6 +15,30 @@
     overflow-x: hidden;
   }
 
+  /* 隐藏全局滚动条 */
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: none;
+  }
+
+  /* IE and Edge */
+  * {
+    -ms-overflow-style: none;
+  }
+
   * {
     @apply border-gray-200 dark:border-gray-700;
     transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
