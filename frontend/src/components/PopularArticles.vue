@@ -81,13 +81,13 @@ const mode = ref<'popular' | 'random'>('popular')
 const popularArticles = computed(() => {
   return [...props.articles]
     .sort((a, b) => b.views - a.views)
-    .slice(0, 10)
+    .slice(0, 5)
 })
 
 // 随机文章
 const randomArticles = computed(() => {
   const shuffled = [...props.articles].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, 10)
+  return shuffled.slice(0, 5)
 })
 
 // 当前显示的文章列表

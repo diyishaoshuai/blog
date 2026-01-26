@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer-container mt-32 relative">
+  <footer class="footer-container mt-5 relative">
     <!-- 增强的波浪效果 -->
     <div class="wave-container">
       <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">

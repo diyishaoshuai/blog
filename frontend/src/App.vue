@@ -7,7 +7,7 @@
     <ParticleBackground />
 
     <Navbar ref="navbarRef" />
-    <main class="container-custom py-8 pt-24 relative z-10">
+    <main class="container-custom pt-24 pb-5 relative z-10">
       <RouterView />
     </main>
     <Footer />

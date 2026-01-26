@@ -7,7 +7,7 @@
         <Carousel />
       </div>
 
-      <div class="flex gap-3">
+      <div class="flex gap-3 items-start">
         <!-- 文章列表区域 -->
         <div class="flex-1">
           <!-- 文章列表 -->
@@ -103,18 +103,18 @@
               </router-link>
             </div>
           </div>
-
-          <!-- 翻页组件 -->
-          <Pagination
-            :current-page="currentPage"
-            :total-pages="totalPages"
-            @update:current-page="handlePageChange"
-          />
         </div>
 
         <!-- 侧边栏 -->
         <Sidebar />
       </div>
+
+      <!-- 翻页组件 - 移到外面以实现全宽居中 -->
+      <Pagination
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        @update:current-page="handlePageChange"
+      />
     </div>
   </div>
 </template>

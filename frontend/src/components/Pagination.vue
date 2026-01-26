@@ -218,7 +218,7 @@ watch(() => props.currentPage, () => {
 
 <style scoped>
 .pagination-container {
-  @apply w-full py-12;
+  @apply w-full py-2 flex justify-center;
 }
 
 .pagination-wrapper {
