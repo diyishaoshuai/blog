@@ -234,7 +234,7 @@ watch(() => props.currentPage, () => {
   @apply hover:border-primary-400 dark:hover:border-primary-500;
   @apply hover:bg-primary-50 dark:hover:bg-primary-900/20;
   @apply hover:text-primary-600 dark:hover:text-primary-400;
-  @apply hover:shadow-lg hover:shadow-primary-500/20;
+  @apply hover:shadow-sm hover:shadow-primary-500/20;
   @apply hover:-translate-y-0.5;
   @apply active:translate-y-0 active:scale-95;
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -285,7 +285,7 @@ watch(() => props.currentPage, () => {
   @apply hover:border-primary-400 dark:hover:border-primary-500;
   @apply hover:bg-primary-50 dark:hover:bg-primary-900/20;
   @apply hover:text-primary-600 dark:hover:text-primary-400;
-  @apply hover:shadow-lg hover:shadow-primary-500/20;
+  @apply hover:shadow-sm hover:shadow-primary-500/20;
   @apply hover:-translate-y-1 hover:scale-110;
   @apply active:translate-y-0 active:scale-100;
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -295,7 +295,7 @@ watch(() => props.currentPage, () => {
 .page-number.active {
   @apply border-primary-500 dark:border-primary-400;
   @apply bg-gradient-to-br from-primary-500 to-primary-600;
-  @apply text-white shadow-xl shadow-primary-500/40;
+  @apply text-white shadow-sm shadow-primary-500/40;
   @apply scale-110;
   position: relative;
 }
@@ -337,7 +337,7 @@ watch(() => props.currentPage, () => {
   @apply transition-all duration-300;
   @apply focus:outline-none focus:border-primary-500 dark:focus:border-primary-400;
   @apply focus:bg-primary-50 dark:focus:bg-primary-900/20;
-  @apply focus:shadow-lg focus:shadow-primary-500/20;
+  @apply focus:shadow-sm focus:shadow-primary-500/20;
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
   font-variant-numeric: tabular-nums;
 }
@@ -363,7 +363,7 @@ watch(() => props.currentPage, () => {
   @apply text-white;
   @apply transition-all duration-300 ease-out;
   @apply hover:bg-primary-600 dark:hover:bg-primary-500;
-  @apply hover:shadow-xl hover:shadow-primary-500/40;
+  @apply hover:shadow-sm hover:shadow-primary-500/40;
   @apply hover:-translate-y-1 hover:scale-110;
   @apply active:translate-y-0 active:scale-100;
 }

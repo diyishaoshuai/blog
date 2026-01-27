@@ -12,15 +12,18 @@
     </main>
     <Footer />
 
+    <!-- 浮动操作按钮 -->
+    <FloatingActionBar ref="floatingBarRef" />
+
     <!-- 主题切换动画遮罩 -->
     <Transition name="theme-transition">
       <div
-        v-if="navbarRef?.isTransitioning"
+        v-if="floatingBarRef?.isTransitioning"
         class="theme-overlay"
         :style="{
-          left: navbarRef?.overlayPosition.x + 'px',
-          top: navbarRef?.overlayPosition.y + 'px',
-          backgroundColor: navbarRef?.overlayColor
+          left: floatingBarRef?.overlayPosition.x + 'px',
+          top: floatingBarRef?.overlayPosition.y + 'px',
+          backgroundColor: floatingBarRef?.overlayColor
         }"
       ></div>
     </Transition>
@@ -34,8 +37,10 @@ import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
 import ParticleBackground from './components/ParticleBackground.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
+import FloatingActionBar from './components/FloatingActionBar.vue'
 
 const navbarRef = ref<InstanceType<typeof Navbar> | null>(null)
+const floatingBarRef = ref<InstanceType<typeof FloatingActionBar> | null>(null)
 </script>
 
 <style scoped>
