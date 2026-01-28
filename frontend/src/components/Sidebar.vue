@@ -69,7 +69,7 @@ import TagsSection from './TagsSection.vue'
 import type { Article } from '@/types'
 
 const stickyContainer = ref<HTMLElement | null>(null)
-const topOffset = 80 // 对应 top-20 (5rem = 80px)
+const topOffset = 60 // 侧边栏粘住顶部后的上外边距
 let initialTop = 0 // 保存sticky容器的初始位置
 
 const handleScroll = () => {

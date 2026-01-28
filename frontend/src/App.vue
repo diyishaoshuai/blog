@@ -38,9 +38,14 @@ import Footer from './components/Footer.vue'
 import ParticleBackground from './components/ParticleBackground.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
 import FloatingActionBar from './components/FloatingActionBar.vue'
+import { useScrollPosition } from './composables/useScrollPosition'
 
 const navbarRef = ref<InstanceType<typeof Navbar> | null>(null)
 const floatingBarRef = ref<InstanceType<typeof FloatingActionBar> | null>(null)
+
+// 初始化滚动位置管理（页面刷新后恢复滚动位置）
+const { initScrollPosition } = useScrollPosition()
+initScrollPosition()
 </script>
 
 <style scoped>
