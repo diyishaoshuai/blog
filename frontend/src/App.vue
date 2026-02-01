@@ -6,7 +6,12 @@
     <!-- 粒子背景 -->
     <ParticleBackground />
 
-    <Navbar ref="navbarRef" />
+    <Navbar
+      ref="navbarRef"
+      :transparent="isArticleDetailPage"
+      :article-title="currentArticleTitle"
+      custom-scroll-text="返回顶部 ↑"
+    />
     <main class="container-custom pt-24 pb-5 relative z-10">
       <RouterView />
     </main>
@@ -31,8 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterView } from 'vue-router'
+import { ref, computed, watch } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
 import ParticleBackground from './components/ParticleBackground.vue'
@@ -40,8 +45,26 @@ import ScrollProgress from './components/ScrollProgress.vue'
 import FloatingActionBar from './components/FloatingActionBar.vue'
 import { useScrollPosition } from './composables/useScrollPosition'
 
+const route = useRoute()
 const navbarRef = ref<InstanceType<typeof Navbar> | null>(null)
 const floatingBarRef = ref<InstanceType<typeof FloatingActionBar> | null>(null)
+const currentArticleTitle = ref('')
+
+// 判断是否为文章详情页
+const isArticleDetailPage = computed(() => {
+  return route.path.startsWith('/article/')
+})
+
+// 监听路由变化，更新文章标题
+watch(() => route.path, async (newPath) => {
+  if (newPath.startsWith('/article/')) {
+    // 在实际应用中，这里应该从 API 或 store 获取文章标题
+    // 目前使用占位符
+    currentArticleTitle.value = '我在2026年推荐的Mac软件'
+  } else {
+    currentArticleTitle.value = ''
+  }
+}, { immediate: true })
 
 // 初始化滚动位置管理（页面刷新后恢复滚动位置）
 const { initScrollPosition } = useScrollPosition()

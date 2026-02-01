@@ -1,65 +1,72 @@
 <template>
-  <div class="min-h-screen">
-    <div class="container-custom py-20">
-      <article class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 md:p-12">
-        <!-- 文章头部 -->
-        <header class="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
-          <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-            {{ article.title }}
-          </h1>
+  <div class="article-detail-page">
+    <!-- Hero Banner - Full Width -->
+    <div class="hero-wrapper">
+      <ArticleHeroBanner
+      :title="article.title"
+      :category="article.category"
+      :tags="article.tags"
+      :word-count="wordCount"
+      :reading-time="readingTime"
+      :date="article.createdAt"
+      :views="article.views"
+      :comments="0"
+      background-type="image"
+      :author-name="article.author.username"
+      author-avatar="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"
+      author-description="分享设计与科技生活"
+    />
+    </div>
 
-          <!-- 元信息 -->
-          <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-            <span class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              {{ formatDate(article.createdAt, 'YYYY-MM-DD') }}
-            </span>
-            <span class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-              {{ article.views }} 阅读
-            </span>
-            <span class="flex items-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-              {{ article.likes }} 点赞
-            </span>
+    <!-- Content Area -->
+    <div class="container-custom py-3">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5">
+        <!-- Main Content -->
+        <article class="lg:col-span-8">
+          <!-- AI Summary -->
+          <ArticleSummary :summary="article.summary" />
+
+          <!-- Article Content -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 md:p-12 mb-2.5 border border-gray-200 dark:border-gray-700">
+            <div class="prose dark:prose-invert max-w-none">
+              <p class="text-lg leading-relaxed">{{ article.content }}</p>
+            </div>
           </div>
 
-          <!-- 分类和标签 -->
-          <div class="flex flex-wrap gap-2 mt-4">
-            <span class="px-3 py-1 text-sm rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300">
-              {{ article.category }}
-            </span>
-            <span
-              v-for="tag in article.tags"
-              :key="tag"
-              class="px-3 py-1 text-sm rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
-            >
-              {{ tag }}
-            </span>
-          </div>
-        </header>
+          <!-- Author Card -->
+          <AuthorCard
+            name="博主"
+            description="分享设计与科技生活"
+            avatar="https://api.dicebear.com/7.x/avataaars/svg?seed=admin"
+          />
 
-        <!-- 文章内容 -->
-        <div class="prose dark:prose-invert max-w-none">
-          <p class="text-lg leading-relaxed">{{ article.content }}</p>
-        </div>
-      </article>
+          <!-- Related Articles -->
+          <div class="mt-2.5">
+            <RelatedArticles :articles="relatedArticles" @shuffle="shuffleRelated" />
+          </div>
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-2.5">
+            <Sidebar />
+          </div>
+        </aside>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { Article } from '@/types'
 import { formatDate } from '@/utils'
+import ArticleHeroBanner from '@/components/ArticleHeroBanner.vue'
+import ArticleSummary from '@/components/ArticleSummary.vue'
+import AuthorCard from '@/components/AuthorCard.vue'
+import RelatedArticles from '@/components/RelatedArticles.vue'
+import Sidebar from '@/components/Sidebar.vue'
 
 const route = useRoute()
 const articleId = route.params.id
@@ -83,5 +90,50 @@ const article = ref<Article>({
   createdAt: '2025-10-02T00:00:00Z',
   updatedAt: '2025-10-02T00:00:00Z'
 })
+
+// Calculate word count and reading time
+const wordCount = computed(() => {
+  return article.value.content.length
+})
+
+const readingTime = computed(() => {
+  const wordsPerMinute = 300
+  return Math.ceil(wordCount.value / wordsPerMinute)
+})
+
+// Related articles
+const relatedArticles = ref([
+  {
+    id: '1',
+    title: 'Final Cut Pro 如何给人物抠像？使用 FxFactory 实现人物抠像功能',
+    cover: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400'
+  },
+  {
+    id: '2',
+    title: 'CommandPost上手：通过鼠标缩放你的 Final Cut Pro 时间线',
+    cover: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400'
+  }
+])
+
+const shuffleRelated = () => {
+  // Shuffle logic here
+  console.log('Shuffling related articles...')
+}
 </script>
+
+<style scoped>
+.article-detail-page {
+  min-height: 100vh;
+}
+
+.hero-wrapper {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  max-width: 100vw;
+}
+</style>
 
