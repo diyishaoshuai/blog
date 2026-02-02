@@ -8,7 +8,7 @@
 
     <Navbar
       ref="navbarRef"
-      :transparent="isArticleDetailPage"
+      :transparent="isTransparentNavbar"
       :article-title="currentArticleTitle"
       custom-scroll-text="返回顶部 ↑"
     />
@@ -50,9 +50,9 @@ const navbarRef = ref<InstanceType<typeof Navbar> | null>(null)
 const floatingBarRef = ref<InstanceType<typeof FloatingActionBar> | null>(null)
 const currentArticleTitle = ref('')
 
-// 判断是否为文章详情页
-const isArticleDetailPage = computed(() => {
-  return route.path.startsWith('/article/')
+// 判断是否需要透明导航栏（首页和文章详情页）
+const isTransparentNavbar = computed(() => {
+  return route.path === '/' || route.path.startsWith('/article/')
 })
 
 // 监听路由变化，更新文章标题

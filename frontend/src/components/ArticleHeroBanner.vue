@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full h-[500px] md:h-[600px] overflow-hidden">
+  <div class="hero-wrapper">
     <!-- Background Layer -->
     <div class="absolute inset-0">
       <!-- Image Background -->
@@ -163,6 +163,21 @@ const adjustColor = (color: string, amount: number) => {
 </script>
 
 <style scoped>
+.hero-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  margin-top: -80px;
+  padding-top: 80px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .hero-wrapper {
+    height: 600px;
+  }
+}
+
 .animate-fade-in-left {
   animation: fadeInLeft 0.8s ease-out;
 }

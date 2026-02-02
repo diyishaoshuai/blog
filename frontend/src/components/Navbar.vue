@@ -56,11 +56,6 @@
               @click="scrollToTop"
               class="scroll-title-container hidden md:flex"
             >
-              <div class="scroll-title-icon">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                </svg>
-              </div>
               <span class="scroll-title-text">{{ displayText }}</span>
             </div>
           </Transition>
@@ -314,7 +309,7 @@ onMounted(() => {
 
 /* ===== 滚动标题样式 ===== */
 .scroll-title-container {
-  @apply items-center gap-3 px-5 py-2.5 rounded-xl cursor-pointer;
+  @apply items-center px-5 py-2.5 rounded-xl cursor-pointer;
   background: linear-gradient(135deg, rgba(14, 165, 233, 0.08), rgba(59, 130, 246, 0.08));
   border: 1px solid rgba(14, 165, 233, 0.15);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -327,13 +322,6 @@ onMounted(() => {
   border-color: rgba(14, 165, 233, 0.25);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
-}
-
-.scroll-title-icon {
-  @apply flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center;
-  background: linear-gradient(135deg, #0ea5e9, #3b82f6);
-  color: white;
-  animation: pulse-icon 2s ease-in-out infinite;
 }
 
 .scroll-title-text {
@@ -358,15 +346,6 @@ onMounted(() => {
 .navbar-transparent .scroll-title-text {
   @apply text-white;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-@keyframes pulse-icon {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
 }
 
 /* ===== 操作按钮样式 ===== */
