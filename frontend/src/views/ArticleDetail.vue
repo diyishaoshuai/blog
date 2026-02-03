@@ -19,7 +19,7 @@
     </div>
 
     <!-- Content Area -->
-    <div class="container-custom py-3">
+    <div class="container-custom py-2">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-2.5">
         <!-- Main Content -->
         <article class="lg:col-span-8">
@@ -48,9 +48,7 @@
 
         <!-- Sidebar -->
         <aside class="lg:col-span-4">
-          <div class="sticky top-24 space-y-2.5">
-            <Sidebar />
-          </div>
+          <Sidebar />
         </aside>
       </div>
     </div>
@@ -132,6 +130,8 @@ const shuffleRelated = () => {
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
+  margin-top: -96px;
+  padding-top: 96px;
   width: 100vw;
   max-width: 100vw;
 }

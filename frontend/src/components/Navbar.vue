@@ -1,12 +1,21 @@
 <template>
-  <nav :class="transparent ? 'navbar-transparent' : 'navbar-glass'">
+  <nav :class="[
+    transparent ? 'navbar-transparent' : 'navbar-glass',
+    { 'is-article-page': isArticleDetailPage, 'is-scrolled': showScrollTitle }
+  ]">
     <div class="container-custom">
       <div class="flex items-center justify-between h-20">
-        <!-- Logo with enhanced styling -->
+        <!-- Logo Avatar -->
         <div class="flex items-center space-x-3 logo-container">
-          <router-link to="/" class="logo-link group">
-            <span class="logo-text">博客</span>
-            <div class="logo-underline"></div>
+          <router-link to="/" @click="handleAvatarClick" class="logo-avatar-link group">
+            <div class="logo-avatar-wrapper">
+              <img
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=blog"
+                alt="Blog Avatar"
+                class="logo-avatar"
+              />
+              <div class="logo-avatar-ring"></div>
+            </div>
           </router-link>
         </div>
 
@@ -127,6 +136,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 
 interface Props {
   transparent?: boolean
@@ -140,6 +150,8 @@ const props = withDefaults(defineProps<Props>(), {
   customScrollText: '返回顶部'
 })
 
+const route = useRoute()
+
 const mobileMenuOpen = ref(false)
 const scrollY = ref(0)
 const showScrollTitle = ref(false)
@@ -148,6 +160,11 @@ const scrollThreshold = 100
 const displayText = computed(() => {
   if (!showScrollTitle.value) return ''
   return props.articleTitle || props.customScrollText
+})
+
+// 判断是否为文章详情页
+const isArticleDetailPage = computed(() => {
+  return route.path.startsWith('/article/')
 })
 
 const toggleMobileMenu = () => {
@@ -163,6 +180,14 @@ const scrollToTop = () => {
     top: 0,
     behavior: 'smooth'
   })
+}
+
+const handleAvatarClick = () => {
+  // 如果已经在首页，滚动到顶部
+  if (route.path === '/') {
+    scrollToTop()
+  }
+  // 如果不在首页，router-link 会自动导航到首页
 }
 
 // 滚动监听
@@ -215,56 +240,115 @@ onMounted(() => {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.navbar-transparent .logo-text,
+/* 默认透明导航栏文字为黑色 */
 .navbar-transparent .nav-link-text {
+  @apply text-gray-900 font-semibold;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.dark .navbar-transparent .nav-link-text {
   @apply text-white;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-.navbar-transparent .action-btn {
+/* 文章详情页透明导航栏文字为白色 */
+.navbar-transparent.is-article-page .nav-link-text {
+  @apply text-white font-semibold;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* 滚动时所有页面文字为黑色 */
+.navbar-transparent.is-scrolled .nav-link-text {
+  @apply text-gray-900 font-semibold;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.dark .navbar-transparent.is-scrolled .nav-link-text {
   @apply text-white;
-  background: rgba(255, 255, 255, 0.15);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* 默认透明导航栏按钮为黑色 */
+.navbar-transparent .action-btn {
+  @apply text-gray-900;
+  background: rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .navbar-transparent .action-btn:hover {
+  background: rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* 文章详情页按钮为白色 */
+.navbar-transparent.is-article-page .action-btn {
+  @apply text-white;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar-transparent.is-article-page .action-btn:hover {
   background: rgba(255, 255, 255, 0.25);
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* ===== Logo 样式 ===== */
-.logo-link {
-  @apply relative inline-block;
-  text-decoration: none;
+/* 滚动时按钮为黑色 */
+.navbar-transparent.is-scrolled .action-btn {
+  @apply text-gray-900;
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.logo-text {
-  @apply text-2xl font-bold;
-  background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #6366f1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -0.02em;
-  transition: all 0.3s ease;
+.navbar-transparent.is-scrolled .action-btn:hover {
+  background: rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 0, 0, 0.15);
 }
 
-.logo-link:hover .logo-text {
-  letter-spacing: 0.02em;
+/* ===== Logo Avatar 样式 ===== */
+.logo-avatar-wrapper {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
 }
 
-.logo-underline {
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #0ea5e9, #3b82f6);
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.logo-link:hover .logo-underline {
+.logo-avatar {
   width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25), 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.logo-avatar-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, #0ea5e9, #3b82f6, #6366f1) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover Effects */
+.logo-avatar-link:hover .logo-avatar {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4);
+}
+
+.logo-avatar-link:hover .logo-avatar-ring {
+  opacity: 1;
+  transform: rotate(180deg);
+}
+
+/* Click Effect */
+.logo-avatar-link:active .logo-avatar {
+  transform: scale(0.95);
 }
 
 /* ===== 导航链接样式 ===== */
@@ -275,7 +359,7 @@ onMounted(() => {
 }
 
 .nav-link-text {
-  @apply text-sm font-medium text-gray-700 dark:text-gray-300;
+  @apply text-base font-bold text-gray-700 dark:text-gray-300;
   letter-spacing: 0.01em;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -325,7 +409,7 @@ onMounted(() => {
 }
 
 .scroll-title-text {
-  @apply text-sm font-semibold text-gray-900 dark:text-gray-100;
+  @apply text-base font-bold text-gray-900 dark:text-gray-100;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -333,19 +417,34 @@ onMounted(() => {
 }
 
 .navbar-transparent .scroll-title-container {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(14, 165, 233, 0.2);
   backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-transparent .scroll-title-container:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(14, 165, 233, 0.3);
+  box-shadow: 0 6px 24px rgba(14, 165, 233, 0.2);
 }
 
 .navbar-transparent .scroll-title-text {
+  @apply text-gray-900 font-semibold;
+  text-shadow: none;
+}
+
+.dark .navbar-transparent .scroll-title-container {
+  background: rgba(17, 24, 39, 0.95);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.dark .navbar-transparent .scroll-title-container:hover {
+  background: rgba(17, 24, 39, 1);
+}
+
+.dark .navbar-transparent .scroll-title-text {
   @apply text-white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== 操作按钮样式 ===== */
